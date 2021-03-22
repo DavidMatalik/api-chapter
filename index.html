@@ -8,18 +8,24 @@
   </head>
   <body>
     <img src="#" />
+    <button>New image</button>
     <script>
       const image = document.querySelector('img')
-      fetch(
-        'https://api.giphy.com/v1/gifs/translate?api_key=okyKEh3HEdYe1eKSFju87xil0oiwk7aq&s=cat',
-        { mode: 'cors' }
-      )
-        .then(function (response) {
-          return response.json()
-        })
-        .then(function (response) {
-          image.src = response.data.images.original.url
-        })
+      const myButton = document.querySelector('button')
+      const getNewGiphy = () => {
+        fetch(
+          'https://api.giphy.com/v1/gifs/translate?api_key=okyKEh3HEdYe1eKSFju87xil0oiwk7aq&s=cat',
+          { mode: 'cors' }
+        )
+          .then(function (response) {
+            return response.json()
+          })
+          .then(function (response) {
+            image.src = response.data.images.original.url
+          })
+      }
+      getNewGiphy()
+      myButton.addEventListener('click', getNewGiphy)
     </script>
   </body>
 </html>
