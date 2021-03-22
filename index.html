@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
   <body>
+    <style>
+      #errorField{
+        color: red;
+      }
+    </style>
     <img src="#" />
     <button>New image</button>
+    <input type="text" />
+    <div id="errorField"></div>
     <script>
       const image = document.querySelector('img')
       const myButton = document.querySelector('button')
+      const searchBox = document.querySelector('input')
+      const errorDisplay = document.querySelector('#errorField')
+
       const getNewGiphy = () => {
+        errorDisplay.innerHTML = ''
+        const searchString = searchBox.value || 'cat'
         fetch(
-          'https://api.giphy.com/v1/gifs/translate?api_key=okyKEh3HEdYe1eKSFju87xil0oiwk7aq&s=cat',
+          `https://api.giphy.com/v1/gifs/translate?api_key=okyKEh3HEdYe1eKSFju87xil0oiwk7aq&s=${searchString}`,
           { mode: 'cors' }
         )
           .then(function (response) {
@@ -22,6 +29,9 @@
           })
           .then(function (response) {
             image.src = response.data.images.original.url
+          })
+          .catch(function (err) {
+            errorDisplay.innerHTML = `Something went wrong with your input. Try again.`
           })
       }
       getNewGiphy()
